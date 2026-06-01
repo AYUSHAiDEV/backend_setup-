@@ -1,0 +1,11 @@
+{
+  "name": "project-initialisation",
+  "version": "1.0.0",
+  "description": "\"project_backend_initialisation_github\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
