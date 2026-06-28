@@ -25,7 +25,7 @@ router.route("/login").post(
 
 router.route("/logout").post(
     verifyjwt,
-logoutuser
+    logoutuser
 )
 
 

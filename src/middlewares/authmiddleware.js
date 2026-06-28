@@ -1,5 +1,5 @@
-import { asyncHandler } from "../utils/asynchandler";
-import { ApiError} from "../utils/Apierror";
+import { asyncHandler } from "../utils/asynchandler.js";
+import { ApiError} from "../utils/Apierror.js";
 import jwt from "jsonwebtoken"
 import {user} from "../models/user.model.js"
 
@@ -15,7 +15,7 @@ try {
         if(!fetch_user){
             throw new ApiError(401,"INVALID ACCESS")
         }
-        req.user=fetch_user
+        req.user=fetch_user 
         next()
 } catch (error) {
     throw new ApiError(401,error?.message||"INVALID TOKEN")

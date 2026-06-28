@@ -88,16 +88,17 @@ const loginuser=asyncHandler(async(req,res)=>{
   $or:[{username},{email}]
  })
 
- if (!fetch_user){
+if (!fetch_user){
 throw new ApiError(404,"user does not exist")
  }
- const ispasswordvalid=await user.ispasswordcorrect(password)
+ const ispasswordvalid=await fetch_user.ispasswordcorrect(password)
 
  if (!ispasswordvalid){
   throw new ApiError(401,"Invalid credentials")
  }
  
 const {acccessToken,refreshToken} = await generateaccessandrefreshtoken(fetch_user._id)
+
 const loggedinuser=await user.findById(fetch_user._id).
 select("-password", "-refreshToken")
 
@@ -127,9 +128,7 @@ const logoutuser=asyncHandler(async(req,res)=>{
 await user.findByIdAndUpdate(
   req.user._id,
   {
-    $set:{
-      refreshToken:undefined
-    }
+$unset: { refreshToken: 1 }
   },
   {
     new:true
@@ -142,7 +141,7 @@ const options ={
 }
 
 return res.status(200).clearCookie("accessToken",options)
-.clearCookie("refreshToken",options)
+.clearCookie("refreshToken",options).json(new Apiresponse(200,{},"user logged out"))
 })
 
 export {registeruser,loginuser,logoutuser}
